@@ -17,18 +17,18 @@ export const Dashboard = () => {
                     }
                 });
                 console.log(response.data);
-                
+
                 setBalance(response.data.balance);
             } catch (error) {
-                
+
                 console.error("Error fetching balance:", error);
             }
         }
         fetchBalance();
-    }, []);
+    }, [balance]);
 
     return <div>
-        <Appbar logo={"logo"} />
+        <Appbar />
         <div className="m-8">
             <Balance value={balance !== null ? balance : "Loading ..."} />
             <Users />

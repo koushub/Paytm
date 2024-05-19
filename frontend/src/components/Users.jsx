@@ -2,18 +2,23 @@ import { useEffect, useState } from "react"
 import { Button } from "./Button"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { useRecoilState } from "recoil";
+import { logoAtom } from "../store/atoms/Logo";
 
 export const Users = () => {
     // Replace with backend call
     const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState("");
+    const [logo, setLogo] = useRecoilState(logoAtom);
 
     useEffect(() => {
         axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
             .then(response => {
                 const currentUserUsername = localStorage.getItem("username");
                 const filteredUsers = response.data.user.filter(user => user.username !== currentUserUsername);
+                const currentUser = response.data.user.find(user => user.username === currentUserUsername);
+                const firstNameLetter = currentUser.firstName.slice(0,1).toUpperCase();
+                setLogo(firstNameLetter);
                 setUsers(filteredUsers);
             })
     }, [filter])
@@ -40,7 +45,7 @@ function User({ user }) {
         <div className="flex">
             <div className="rounded-full h-12 w-12 bg-slate-200 flex justify-center mt-1 mr-2">
                 <div className="flex flex-col justify-center h-full text-xl">
-                    {user.firstName[0]}
+                    {user.firstName[0].toUpperCase()}
                 </div>
             </div>
             <div className="flex flex-col justify-center h-ful">
