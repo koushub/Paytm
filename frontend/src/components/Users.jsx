@@ -12,7 +12,9 @@ export const Users = () => {
     useEffect(() => {
         axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
             .then(response => {
-                setUsers(response.data.user)
+                const currentUserUsername = localStorage.getItem("username");
+                const filteredUsers = response.data.user.filter(user => user.username !== currentUserUsername);
+                setUsers(filteredUsers);
             })
     }, [filter])
 
@@ -26,12 +28,12 @@ export const Users = () => {
             }} type="text" placeholder="Search users..." className="w-full px-2 py-1 border rounded border-slate-200"></input>
         </div>
         <div>
-            {users.map(user => <User user={user} />)}
+            {users.map(user => <User key={user._id} user={user} />)}
         </div>
     </>
 }
 
-function User({user}) {
+function User({ user }) {
     const navigate = useNavigate();
 
     return <div className="flex justify-between">

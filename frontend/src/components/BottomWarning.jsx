@@ -10,4 +10,3 @@ export function BottomWarning({label, buttonText, to}) {
       </Link>
     </div>
 }
-  

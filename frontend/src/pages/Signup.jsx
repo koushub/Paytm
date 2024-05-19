@@ -27,7 +27,7 @@ export const Signup = () => {
         }} placeholder="Doe" label={"Last Name"} />
         <InputBox onChange={e => {
           setUsername(e.target.value);
-        }} placeholder="harkirat@gmail.com" label={"Email"} />
+        }} placeholder="yourmail@email.com" label={"Email"} />
         <InputBox onChange={(e) => {
           setPassword(e.target.value)
         }} placeholder="123456" label={"Password"} />
@@ -39,7 +39,8 @@ export const Signup = () => {
               lastName,
               password
             });
-            localStorage.setItem("token", response.data.token)
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("username", username);
             navigate("/dashboard")
           }} label={"Sign up"} />
         </div>
